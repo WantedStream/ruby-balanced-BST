@@ -37,9 +37,59 @@ class Tree
 
     end
 
-    def level_order()
-        a
+    
+   
+    def level_order_normal(block)
+        return if(@root==nil)
+        return to_enum(:my_each) unless block!=nil
+
+        queue=[]
+      queue.push(@root) 
+      while(queue.size>0)
+        x=queue.shift
+        block.call x
+        queue.push(x.left) if(x.left!=nil)
+        queue.push(x.right) if(x.right!=nil) 
+      end
+
+     
     end
+
+    def level_order(block,recursion=false)
+        block.to_proc
+        arr=[] unless block_given? 
+        if(@root==nil)
+            return arr
+        end
+        if(recursion)
+            level_order_recursion(block,[@root])
+        else
+            level_order_normal(block)
+        end
+    end
+
+    
+    def level_order_recursion(block,q)
+        
+        if(q.size<=0)
+            return
+        end
+        x = q.shift
+        if(x.left!=nil)
+            q.push(x.left)
+        end
+        if(x.right!=nil)
+            q.push(x.right)
+        end
+        
+        block.call x
+        level_order_recursion(block,q)
+            
+           
+    end
+
+    
+
     def create_balancedBST_tree(arr,start,ending)
         return nil if(start>ending)
         
