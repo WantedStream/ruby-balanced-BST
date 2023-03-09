@@ -248,12 +248,42 @@ class Tree
         end
     end
     ###
-    def inorder
+    def inorder(block=nil,t=@root,arr=[])
+        return arr if(t==nil)
+           
+        inorder(block,t.left,arr)
+        if(block==nil)
+            arr.push(t.data)
+        else
+        block.call(t)
+        end
+        inorder(block,t.right,arr)
     end
-    def preorder
+    def preorder(block=nil,t=@root,arr=[])
+    return arr if(t==nil) 
+
+    if(block==nil)
+        arr.push(t.data)
+    else
+    block.call(t)
     end
-    def postorder
+        preorder(block,t.left,arr)
+        preorder(block,t.right,arr)
     end
 
+    def postorder(block=nil,t=@root,arr=[])
+        return arr if(t==nil)
+        postorder(block,t.left,arr)
+        postorder(block,t.right,arr)
+        if(block==nil)
+            arr.push(t.data)
+        else
+        block.call(t)
+        end
+       return arr
+    end
 
+    def height
+    end
+    
 end
