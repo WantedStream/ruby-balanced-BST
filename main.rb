@@ -10,4 +10,4 @@ t.pretty_print
 puts t.find(11)
 proc = Proc.new {|v| puts v.data}
 proc.to_proc
-t.level_order(proc,true)
+p t.level_order(nil,true)

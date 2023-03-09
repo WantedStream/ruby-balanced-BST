@@ -39,7 +39,7 @@ class Tree
 
     
    
-    def level_order_normal(block)
+    def level_order_normal(block,arr)
         return if(@root==nil)
         return to_enum(:my_each) unless block!=nil
 
@@ -47,7 +47,8 @@ class Tree
       queue.push(@root) 
       while(queue.size>0)
         x=queue.shift
-        block.call x
+        arr.push(x.data)
+        block.call x if(block!=nil)
         queue.push(x.left) if(x.left!=nil)
         queue.push(x.right) if(x.right!=nil) 
       end
@@ -56,25 +57,28 @@ class Tree
     end
 
     def level_order(block,recursion=false)
-        block.to_proc
-        arr=[] unless block_given? 
+        block.to_proc unless block.nil?
+        arr=[] 
         if(@root==nil)
             return arr
         end
         if(recursion)
-            level_order_recursion(block,[@root])
+            level_order_recursion(block,[@root],arr)
         else
-            level_order_normal(block)
+            level_order_normal(block,arr)
         end
+
+        return arr unless block!=nil
     end
 
     
-    def level_order_recursion(block,q)
+    def level_order_recursion(block,q,arr)
         
         if(q.size<=0)
             return
         end
         x = q.shift
+        arr.push(x.data)
         if(x.left!=nil)
             q.push(x.left)
         end
@@ -82,8 +86,8 @@ class Tree
             q.push(x.right)
         end
         
-        block.call x
-        level_order_recursion(block,q)
+        block.call x if (block!=nil)
+        level_order_recursion(block,q,arr)
             
            
     end
@@ -243,4 +247,13 @@ class Tree
             getmin(currentnode.left)
         end
     end
+    ###
+    def inorder
+    end
+    def preorder
+    end
+    def postorder
+    end
+
+
 end
