@@ -283,7 +283,27 @@ class Tree
        return arr
     end
 
-    def height
+    def height(n=@root)
+        return -1 if(n==nil)
+        return [1+height(n.left),1+height(n.right)].max()   
     end
-    
+    def depth(n=@root,number)
+        if(n==nil)
+            return -1
+        end
+        dis=-1
+        disleft=depth(n.left,number)
+        disright=depth(n.right,number)
+         if(n.data==number.data)
+            return  dis+1
+         elsif(disleft>=0)
+            dis=disleft
+            return dis+=1
+         elsif(disright>=0)
+            dis=disright
+            return dis+=1
+
+         end
+        return dis
+    end
 end
