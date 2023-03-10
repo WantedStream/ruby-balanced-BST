@@ -24,16 +24,16 @@ class Node
 end
 
 class Tree
-
+    attr_accessor :root
     def initialize(arr)
         @root=build_tree(arr)
     end
 
-    def build_tree(arr)
+    def build_tree(t=self,arr)
         arr=arr.uniq
         arr=arr.sort
 
-        root=create_balancedBST_tree(arr,0,arr.length-1)
+        t.root=create_balancedBST_tree(arr,0,arr.length-1)
 
     end
 
@@ -305,5 +305,18 @@ class Tree
 
          end
         return dis
+    end
+
+    def balanced?(t=self)
+       return (height(t.root.left)-height(t.root.right)).abs<=1
+    end
+
+    def rebalance(t=self)
+        return t if(t.balanced?)
+        arr=[]
+        proc = Proc.new {|v| arr.push(v.data)}
+        proc.to_proc
+        level_order(proc,false)
+        return Tree.new(arr)
     end
 end
